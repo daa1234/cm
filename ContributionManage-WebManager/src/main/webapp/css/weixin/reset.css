@@ -1,0 +1,84 @@
+@charset "UTF-8";
+/* CSS Document */
+html:root {
+	font-size: 625%;
+}
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body, img, p, ul, li, button, strong, span {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	font-family:Tahoma,Arial,Roboto,”Droid Sans”,”Helvetica Neue”,”Droid Sans Fallback”,”Heiti SC”,sans-self;
+	font-weight: normal;
+	font-size: 0.12rem;
+	margin: 0 auto;
+	min-width: 320px;
+	max-width: 800px;
+}
+a {
+	border: none;
+    outline: none;
+    text-decoration: none;
+}
+a:hover{
+	background:none;
+	text-decoration:none;
+	}
+a, button, input {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+li {
+	list-style: none;
+}
+img {
+	display: block;
+	width: 100%;
+	margin: 0 auto;
+	border: none;
+}
+.clear:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.bk, .bk3, .bk5, .bk10, .bk15, .bk20, .bk25, .bk30 {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.bk {
+	height: 0px;
+}
+.bk3 {
+	height: 0.03rem;
+}
+.bk5 {
+	height: 0.05rem;
+}
+.bk10 {
+	height: 0.1rem;
+}
+.bk15 {
+	height: 0.15rem;
+}
+.bk20 {
+	height: 0.2rem;
+}
+.bk25 {
+	height: 0.25rem;
+}
+.bk30 {
+	height: 0.3rem;
+}
+.col-left{float:left}
+.col-right{float:right}

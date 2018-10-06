@@ -1,0 +1,77 @@
+.ppp{margin-top: 9px;}
+.table_cell.td_high_light {
+  background-color: #f4f5f9;
+}
+.table_cell.tr {
+  text-align: right;
+}
+.thcss{
+  text-align: right;
+}
+
+.table {
+	width: 100%;
+	font-size: 14px;
+	background-color: #fff;
+	text-align: center;
+	border-top: 1px solid #e7e7eb;
+	border-bottom: 1px solid #e7e7eb;
+	border-spacing: 0
+}
+
+.table_cell {
+	padding: 0;
+	font-weight: 200;
+	font-style: normal
+}
+
+.thead {
+	background-color: #f4f5f9
+}
+
+.thead .table_cell {
+	line-height: 32px;
+	border-left: 1px solid #e7e7eb;
+	border-bottom: 1px solid #e7e7eb
+}
+
+.thead .table_cell:first-child {
+	border-left-width: 0
+}
+
+.tbody tr:hover, .tbody tr.even {
+	background-color: transparent
+}
+
+.tbody tr.empty_item:hover {
+	background: 0
+}
+
+.tbody tr:first-child .table_cell {
+	border-top-width: 0
+}
+
+.tbody .table_cell {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	border-top: 1px solid #e7e7eb
+}
+
+.thead .table_cell {
+	border-left-width: 0;
+	line-height: 40px
+}
+
+.tbody .table_cell.hd_dropdown_area {
+	padding-left: 30px
+}
+
+.tbody .table_cell {
+	padding-top: 9px;
+	padding-bottom: 9px
+}
+
+.table_cell {
+	padding-left: 20px;
+	padding-right: 20px
+}

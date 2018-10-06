@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<!-- C3P0 数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${hibernate.connection.driver_class}" />
+		<property name="jdbcUrl" value="${hibernate.connection.url}" />
+		<!-- 初始化连接池中的连接数，取值应在minPoolSize与maxPoolSize之间，默认为3 -->
+		<property name="initialPoolSize" value="10" />
+		<!-- 连接池中保留的最小连接数，默认为：3 -->
+		<property name="minPoolSize" value="5" />
+		<!--连接池中保留的最大连接数。默认值: 15 -->
+		<property name="maxPoolSize" value="50" />
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。默认值: 3 -->
+		<property name="acquireIncrement" value="5" />
+		<!--定义在从数据库获取新连接失败后重复尝试的次数。默认值: 30 ；小于等于0表示无限次 -->
+		<property name="acquireRetryAttempts" value="0" />
+		<!--重新尝试的时间间隔，默认为：1000毫秒 -->
+		<property name="acquireRetryDelay" value="1000" />
+		<!--最大空闲时间，3600秒内未使用则连接被丢弃。若为0则永不丢弃。默认值: 0 -->
+		<property name="maxIdleTime" value="600" />
+		<!--c3p0全局的PreparedStatements缓存的大小。如果maxStatements与maxStatementsPerConnection均为0，则缓存不生效，只要有一个不为0，则语句的缓存就能生效。如果默认值: 
+			0 -->
+		<property name="maxStatements" value="500" />
+		<!--maxStatementsPerConnection定义了连接池内单个连接所拥有的最大缓存statements数。默认值: 0 -->
+		<property name="maxStatementsPerConnection" value="5" />
+		<!--定义所有连接测试都执行的测试语句。在使用连接测试的情况下这个一显著提高测试速度。测试的表必须在初始数据源的时候就存在。Default: 
+			null -->
+<!-- 		<property name="preferredTestQuery" value="SELECT COUNT(1) FROM baby91_systemuser"/>   -->
+         <!--每1800秒检查所有连接池中的空闲连接。Default: 0 -->  
+        <property name="idleConnectionTestPeriod" value="60"/>  
+        <!-- 获取连接时测试有效性，每次都验证连接是否可用 -->  
+        <property name="testConnectionOnCheckout" value="true"/> 
+        <property name="testConnectionOnCheckin" value="true"/>
+		<property name="properties">
+			<props>
+				<prop key="user">${hibernate.connection.username}</prop>
+				<prop key="password">${hibernate.connection.password}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.cm.common.model</value>
+				<value>com.cm.modules.*.model</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<!-- session自动重连 -->
+				<prop key="hibernate.autoReconnect">true</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<!-- <prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop> 
+					<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop> 
+					<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop> 
+					<prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop> 
+					<prop key="hibernate.cache.region_prefix">${hibernate.cache.region_prefix}</prop> 
+					<prop key="hibernate.memcached.servers">${hibernate.memcached.servers}</prop> 
+					<prop key="hibernate.memcached.memcacheClientFactory">${hibernate.memcached.memcacheClientFactory}</prop> -->
+				<!-- <prop key="hibernate.c3p0.min_size">2</prop> -->
+				<!-- <prop key="hibernate.c3p0.timeout">5000</prop> -->
+				<!-- <prop key="hibernate.c3p0.max_statements">100</prop> -->
+				<!-- <prop key="hibernate.c3p0.idle_test_period">3000</prop> -->
+				<!-- <prop key="hibernate.c3p0.acquire_increment">2</prop> -->
+				<!-- <prop key="hibernate.c3p0.validate">false</prop> -->
+			</props>
+		</property>
+	</bean>
+
+	<!-- 配置事务管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- 配置注解实现管理事务（cglib：proxy-target-class="true"）在类上面加事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+</beans>

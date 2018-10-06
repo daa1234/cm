@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	
+	<import resource="classpath:applicationContext_background_system_dao.xml"/>
+	<import resource="classpath:applicationContext_common.xml"/>
+	
+	<!-- 默认的注解映射的支持 ,它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter -->
+	<mvc:annotation-driven />
+	<!-- 使用 annotation 自动注册bean,并检查@Controller, @Service, @Repository注解已被注入 -->
+	<context:component-scan base-package="com.oscloud" />
+	<context:component-scan base-package="com.cm" />
+	
+	<!-- 完成请求和注解POJO的映射 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
+	<!-- 对转向页面的路径解析。prefix：前缀， suffix：后缀  p:suffix=".jsp"-->
+<!-- 	<bean -->
+<!-- 		class="org.springframework.web.servlet.view.InternalResourceViewResolver" -->
+<!-- 		p:prefix="/jsp/"  /> -->
+
+	<!-- 对静态资源文件的访问 -->
+	<mvc:resources mapping="/bower_components/**" location="/bower_components/"
+		cache-period="31556926" />
+	<mvc:resources mapping="/ckeditor/**" location="/ckeditor/"
+		cache-period="31556926" />
+	<mvc:resources mapping="/css/**" location="/css/"
+		cache-period="31556926" />
+
+	<mvc:resources mapping="/css_web/**" location="/css_web/"
+		cache-period="31556926" />
+
+	<mvc:resources mapping="/fonts/**" location="/fonts/"
+		cache-period="31556926" />
+
+	<mvc:resources mapping="/img/**" location="/img/"
+		cache-period="31556926" />
+	<mvc:resources mapping="/js/**" location="/js/"
+		cache-period="31556926" />
+
+	<mvc:resources mapping="/Picture/**" location="/Picture/"
+		cache-period="31556926" />
+
+	<mvc:resources mapping="/Scripts/**" location="/Scripts/"
+		cache-period="31556926" />
+
+	<mvc:resources mapping="/tree/**" location="/tree/"
+		cache-period="31556926" />
+		<mvc:resources mapping="/upload/**" location="/upload/"
+		cache-period="31556926" />
+		
+	<mvc:resources mapping="/misc/**" location="/misc/"
+		cache-period="31556926" />
+		
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<!-- 多个拦截器,顺序执行 -->
+		<mvc:interceptor>     
+			<!-- 如果不配置或/*,将拦截所有的Controller  -->
+			<mvc:mapping path="/**"/> 
+			<!-- 需要排除拦截的地址 ，注意如果只配置exclude-mapping而没有配置mvc:mapping会报错 -->
+			<mvc:exclude-mapping path="/login.jsp"/>
+			<mvc:exclude-mapping path="/user/login"/>
+			<bean class="com.cm.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- 第三步：注册处理器映射器/处理器适配器 ，添加conversion-service属性 -->
+	<mvc:annotation-driven conversion-service="conversionService" />
+	
+	<!-- 第二步： 创建convertion-Service ，并注入dateConvert -->
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<ref bean="dateConvert" />
+			</set>
+		</property>
+	</bean>
+	<!-- 第一步: 创建自定义日期转换规则 -->
+	<bean id="dateConvert" class="com.cm.converter.DateConverter" />
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!-- 指定所上传文件的总大小不能超过4MB。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+        <property name="maxUploadSize" value="40000000000"/>
+        <property name="maxInMemorySize">
+			<value>40960</value>
+		</property>
+    </bean>	
+	
+
+</beans>

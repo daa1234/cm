@@ -1,0 +1,33 @@
+*{margin:0; padding:0;}
+img{border:0;}
+a{text-decoration:none; color:#555555;}
+a:hover{ color:#FF0000;}
+li{list-style:none;}
+ul{list-style:none;}
+h1,h2,h3,h4,h5,h6{font-family:"Î¢ÈíÑÅºÚ"; font-size:1.5em;font-weight:normal;}
+body{ font-size:12px; font-family:"Î¢ÈíÑÅºÚ"; background:#eeeeee;}
+
+
+.head{ float:left; width:94%; height:138px; background:#FFFFFF; padding:0 3%;}
+.head p{ float:left; width:60%; line-height:130px; font-size:1.5em; color:#6c6b6b;}
+.head span{ float:right; width:20%; height:60px;}
+.head span a{ float:right; width:100%; line-height:60px; background:#00FF00; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; font-size:2em; color:#FFFFFF; text-align:center; margin-top:35px;}
+
+.data{ float:left; width:94%; height:300px; padding:0 3%;  border:2px solid #e5e5e5; border-left:none; border-right:none; background:#FFFFFF;}
+.data dl{ float:; width:100%; height:99px; border-bottom:2px solid #e5e5e5;}
+.data dl dd{ float:left; width:20%; line-height:99px; font-size:1.5em; color:#6c6b6b;}
+.data dl dt{ float:right; width:80%; line-height:99px; font-size:1.5em; color:#6c6b6b; text-align:right;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
